@@ -73,6 +73,6 @@ struct NoteDetailView: View {
 
 struct NoteDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteDetailView(uuid:nil, viewContext: PersistenceController.shared.container.viewContext)
+        NoteDetailView(uuid:"uuid1", viewContext: PersistenceController.preview.container.viewContext)
     }
 }
