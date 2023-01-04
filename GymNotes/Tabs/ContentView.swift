@@ -18,27 +18,36 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp ?? Date(), formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp ?? Date(), formatter: itemFormatter)
+            VStack {
+                List {
+                    Section(header: Text("Workouts")) {
+                        ForEach(items) { item in
+                            NavigationLink {
+                                Text("Item at \(item.timestamp ?? Date(), formatter: itemFormatter)")
+                            } label: {
+                                Text(item.timestamp ?? Date(), formatter: itemFormatter)
+                            }
+                        }
+                        .onDelete(perform: deleteItems)
+                    }.headerProminence(.increased)
+                    Section {
+                        Button(action: addItem) {
+                            Label("Add Workout", systemImage: "plus")
+                        }
+                    }.listStyle(.insetGrouped)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                    ToolbarItem {
+                        Button(action: addItem) {
+                            Label("Add Workout", systemImage: "plus")
+                        }
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
+            Text("Create Your Workout!")
         }
     }
 
