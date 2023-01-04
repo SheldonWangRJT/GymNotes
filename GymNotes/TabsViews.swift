@@ -34,7 +34,7 @@ struct TabsViews: View {
 
 struct TabsViews_Previews: PreviewProvider {
     static var previews: some View {
-        TabsViews(persistenceController: PersistenceController.shared)
+        TabsViews(persistenceController: PersistenceController.preview)
     }
 }
 
