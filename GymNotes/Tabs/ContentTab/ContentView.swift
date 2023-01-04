@@ -18,32 +18,34 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    Section(header: Text("Workouts")) {
-                        ForEach(items) { item in
-                            NavigationLink {
-                                Text("Item at \(item.timestamp ?? Date(), formatter: itemFormatter)")
-                            } label: {
+            List {
+                Section(header: Text("Workouts")) {
+                    ForEach(items) { item in
+                        NavigationLink {
+                            NoteDetailView(uuid: item.uuid, viewContext: viewContext)
+                        } label: {
+                            HStack {
                                 Text(item.timestamp ?? Date(), formatter: itemFormatter)
+                                Spacer()
+                                Text(itemUpdateStateString(from:item.updateState))
                             }
                         }
-                        .onDelete(perform: deleteItems)
-                    }.headerProminence(.increased)
-                    Section {
-                        Button(action: addItem) {
-                            Label("Add Workout", systemImage: "plus")
-                        }
-                    }.listStyle(.insetGrouped)
-                }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
                     }
-                    ToolbarItem {
-                        Button(action: addItem) {
-                            Label("Add Workout", systemImage: "plus")
-                        }
+                    .onDelete(perform: deleteItems)
+                }.headerProminence(.increased)
+                Section {
+                    Button(action: addItem) {
+                        Label("Add Workout", systemImage: "plus")
+                    }
+                }.listStyle(.insetGrouped)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+                ToolbarItem {
+                    Button(action: addItem) {
+                        Label("Add Workout", systemImage: "plus")
                     }
                 }
             }
@@ -54,7 +56,10 @@ struct ContentView: View {
     private func addItem() {
         withAnimation {
             let newItem = Item(context: viewContext)
+            newItem.uuid = UUID().uuidString
             newItem.timestamp = Date()
+            newItem.category = 1
+            newItem.updateState = ItemUpdateState.new.rawValue
 
             do {
                 try viewContext.save()
@@ -70,8 +75,7 @@ struct ContentView: View {
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map {
-                print($0)
-                return items[$0]
+                items[$0]
             }.forEach {
                 viewContext.delete($0)
             }
