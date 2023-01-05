@@ -22,7 +22,6 @@ struct ProfileView: View {
                     .frame(width: Const.imgWidth, height: Const.imgWidth)
                     .foregroundColor(.primary)
                     .shadow(color: .gray, radius: Const.imgWidth/2)
-                    .backgroundStyle(.green)
                     .clipShape(Capsule())
                 Text("Proile View".uppercased())
             }
