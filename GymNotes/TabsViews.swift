@@ -11,6 +11,17 @@ import SwiftUI
 struct TabsViews: View {
     let persistenceController: PersistenceController
     
+    init(persistenceController: PersistenceController) {
+        self.persistenceController = persistenceController
+        
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithDefaultBackground()
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
+    }
+    
     var body: some View {
         TabView {
             ContentView()

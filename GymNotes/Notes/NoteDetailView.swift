@@ -9,17 +9,28 @@ import SwiftUI
 import CoreData
 
 struct NoteDetailView: View {
+    
+    private enum Mode {
+        case edit
+        case new
+    }
+    
     // for pop back
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    let uuid:String?
-    private var viewContext: NSManagedObjectContext
-
+    private let uuid:String?
+    private let viewContext: NSManagedObjectContext
+    
+    private var mode:Mode {
+        uuid == nil ? .new : .edit
+    }
+    
     @FetchRequest private var items: FetchedResults<Item>
     
     init(uuid: String?, viewContext: NSManagedObjectContext) {
         self.uuid = uuid
         self.viewContext = viewContext
+        
         _items = FetchRequest<Item>(
             entity: Item.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
@@ -29,18 +40,46 @@ struct NoteDetailView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    VStack(alignment: .leading) {
-                        Text(item.uuid ?? "")
-                            .foregroundStyle(.primary)
-                        Text("\(item.category)")
-                            .foregroundColor(.secondary)
+            ZStack {
+                let item = items.first ?? Item(context: viewContext)
+                List {
+                    HStack {
+                        Text("Date")
+                        Spacer()
+                        Text(itemTimeStampString(item: item))
+                    }
+                    HStack {
+                        Text("Category")
+                        Spacer()
+                        Text("Tap to select").foregroundColor(.secondary)
+                    }
+                }
+                
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button {
+
+                        } label: {
+                            Image(systemName: "plus")
+                                .frame(width: 50, height: 50)
+                                .clipped()
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 25).stroke(lineWidth: 2)
+                                }
+                        }
+                        .cornerRadius(25)
+                        .padding()
+                        .shadow(color: Color.black.opacity(0.3),
+                                    radius: 3,
+                                    x: 3,
+                                    y: 3)
                     }
                 }
             }
         }
-        .navigationTitle(uuid != nil ? "Update Workout" : "New Workout")
+        .navigationTitle(navigationTitle())
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -52,7 +91,25 @@ struct NoteDetailView: View {
         }
     }
     
-    func saveAndPop() {
+    private func itemTimeStampString(item:Item) -> String {
+        if let timestamp = item.timestamp {
+            return timestamp.formatted()
+        }
+        let date = Date()
+        item.timestamp = date
+        return date.formatted()
+    }
+    
+    private func navigationTitle() -> String {
+        switch mode {
+        case .new:
+            return "New Workout"
+        case .edit:
+            return "Update Workout"
+        }
+    }
+    
+    private func saveAndPop() {
         withAnimation {
             guard let item = items.first else { return }
             item.updateState = ItemUpdateState.updated.rawValue
@@ -73,6 +130,8 @@ struct NoteDetailView: View {
 
 struct NoteDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteDetailView(uuid:"uuid1", viewContext: PersistenceController.preview.container.viewContext)
+        NavigationView {
+            NoteDetailView(uuid:"uuid1", viewContext: PersistenceController.preview.container.viewContext)
+        }
     }
 }

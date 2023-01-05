@@ -19,7 +19,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Workouts")) {
+                Section {
                     ForEach(items) { item in
                         NavigationLink {
                             NoteDetailView(uuid: item.uuid, viewContext: viewContext)
@@ -32,12 +32,16 @@ struct ContentView: View {
                         }
                     }
                     .onDelete(perform: deleteItems)
-                }.headerProminence(.increased)
-                Section {
-                    Button(action: addItem) {
+                    .listStyle(.insetGrouped)
+                } header: {
+                    Text("Workouts")
+                } footer: {
+                    NavigationLink {
+                        NoteDetailView(uuid: nil, viewContext: viewContext)
+                    } label: {
                         Label("Add Workout", systemImage: "plus")
                     }
-                }.listStyle(.insetGrouped)
+                }.headerProminence(.increased)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -49,6 +53,7 @@ struct ContentView: View {
                     }
                 }
             }
+            .navigationTitle("GymNotes!")
             Text("Create Your Workout!")
         }
     }
