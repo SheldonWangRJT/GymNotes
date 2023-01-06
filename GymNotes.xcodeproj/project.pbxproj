@@ -21,6 +21,7 @@
 		6B3171DC2964DC67005ADBF8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3171DB2964DC67005ADBF8 /* ProfileView.swift */; };
 		6B3171DF2965E8F5005ADBF8 /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3171DE2965E8F5005ADBF8 /* NoteDetailView.swift */; };
 		6B3171E32965F7F0005ADBF8 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3171E22965F7F0005ADBF8 /* DataModels.swift */; };
+		6B31722A2968B8F5005ADBF8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6B3172292968B8F5005ADBF8 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		6B3171DB2964DC67005ADBF8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		6B3171DE2965E8F5005ADBF8 /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 		6B3171E22965F7F0005ADBF8 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
+		6B3172292968B8F5005ADBF8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		6B3171A5295BD38A005ADBF8 /* GymNotes */ = {
 			isa = PBXGroup;
 			children = (
+				6B3172292968B8F5005ADBF8 /* README.md */,
 				6B3171AF295BD38C005ADBF8 /* Persistence.swift */,
 				6B3171A6295BD38A005ADBF8 /* GymNotesApp.swift */,
 				6B3171D62964D9D8005ADBF8 /* TabsViews.swift */,
@@ -286,6 +289,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B31722A2968B8F5005ADBF8 /* README.md in Resources */,
 				6B3171AE295BD38C005ADBF8 /* Preview Assets.xcassets in Resources */,
 				6B3171AB295BD38C005ADBF8 /* Assets.xcassets in Resources */,
 			);
